@@ -1,9 +1,17 @@
 <?php
     require_once 'connection.php';
-    $query = $db->prepare("SELECT value FROM settings WHERE key='isNavbarItemActive'");
+    $query = $db->prepare("SELECT value FROM settings WHERE `key`='isHeaderActive'");
     $query->execute();
-?>
+    $isHeaderActive =false;
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        foreach ($result as $row) {
+            $isHeaderActive = $row['value'];
 
+
+        }
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,17 +52,10 @@ https://templatemo.com/tm-541-host-cloud
     </div>
     <!-- ***** Preloader End ***** -->
 
-  <?php
-      if ($query->rowCount()) {
-          foreach ($query as $row) {
-
-              ?>
-
+    <?php if ($isHeaderActive == 'true') { ?>
     <!-- Header -->
     <header class="">
-
-      <nav class="navbar navbar-expand-lg"  >
-      <?php if ($row['value'] == 'true') { ?>
+      <nav class="navbar navbar-expand-lg">
         <div class="container">
           <a class="navbar-brand" href="index.php"><h2>Host <em>Cloud</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,16 +79,6 @@ https://templatemo.com/tm-541-host-cloud
             </ul>
           </div>
         </div>
-
-      <?php } else {?>
-       <div style="display:none"> </div>
-      <?php }
-          }
-      } else {
-          echo "No Records Found";
-      }
-                  ?>
-
        <div class="functional-buttons">
             <ul>
               <li><a href="#">Log in</a></li>
@@ -97,6 +88,5 @@ https://templatemo.com/tm-541-host-cloud
         </div>
       </nav>
     </header>
-
-
+    <?php } ?>
 
