@@ -1,7 +1,27 @@
-<?php require_once 'header.php';?>
+<?php
+  require_once 'header.php';
+  require_once 'connection.php';
+
+  $query = $db->prepare("SELECT value FROM settings WHERE `key`='isSearchDomain' AND `key`='isTldBar'");
+  $query->execute();
+  $isSearchDomain = true;
+  $isTldBar = true;
+
+  if ($query->rowCount() > 0) {
+    $result = $query->fetchAll();
+    foreach ($result as $row) {
+      $isSearchDomain = $row['value'];
+      $isTldBar = $row['value'];
+    }
+  }
+
+  ?>
+
+
     <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="banner">
+    <?php if ($isSearchDomain == 'true') { ?>
       <div class="container">
         <div class="row">
           <div class="col-md-8 offset-md-2">
@@ -12,12 +32,14 @@
                 <div class="searchText">
 
                   <input type="text" name="q" class="searchText" placeholder="Enter your domain here..." autocomplete="on">
+                  <?php if ($isTldBar == 'true') { ?>
                   <ul>
                     <li><label><input type="checkbox" name="ext_com" value="1"><span>.com <em>($10/yr)</em></span></label></li>
                     <li><label><input type="checkbox" name="ext_net" value="1"><span>.net <em>($12/yr)</em></span></label></li>
                     <li><label><input type="checkbox" name="ext_org" value="1"><span>.org <em>($8/yr)</em></span></label></li>
                     <li><label><input type="checkbox" name="ext_in" value="1"><span>.in <em>($6/yr)</em></span></label></li>
                   </ul>
+                  <?php } ?>
                 </div>
                     <input type="submit" name="results" class="main-button" value="Search Now">
                  </form>
@@ -28,6 +50,7 @@
           </div>
         </div>
       </div>
+      <?php } ?>
     </div>
     <!-- Banner Ends Here -->
 

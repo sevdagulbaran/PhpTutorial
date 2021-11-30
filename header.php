@@ -1,20 +1,26 @@
-<?php
-    require_once 'connection.php';
-    $query = $db->prepare("SELECT value FROM settings WHERE `key`='isHeaderActive'");
-    $query->execute();
-    $isHeaderActive =false;
-    if ($query->rowCount() > 0) {
-        $result = $query->fetchAll();
-        foreach ($result as $row) {
-            $isHeaderActive = $row['value'];
-
-
-        }
+  <?php
+  require_once 'connection.php';
+  // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isHeaderActive'");
+  $query = $db->prepare("SELECT value FROM settings WHERE `key`='isLoginActive' AND `key`='isSignUpActive' AND `key`='isHeaderActive'");
+  // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isSignUpActive'");
+  //$query = $db->prepare("SELECT value FROM settings WHERE `key` IN ('isSignUp', 'isLoginActive')");
+  $query->execute();
+  $isHeaderActive = true;
+  $isLoginActive = true;
+  $isSignUpActive = false;
+  if ($query->rowCount() > 0) {
+    $result = $query->fetchAll();
+    foreach ($result as $row) {
+      $isHeaderActive = $row['value'];
+      $isSignUpActive = $row['value'];
+      $isLoginActive = $row['value'];
     }
-?>
+  }
 
-<!DOCTYPE html>
-<html lang="en">
+  ?>
+
+  <!DOCTYPE html>
+  <html lang="en">
 
   <head>
 
@@ -33,7 +39,7 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-host-cloud.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-<!--
+    <!--
 
 Host Cloud Template
 
@@ -41,52 +47,58 @@ https://templatemo.com/tm-541-host-cloud
 
 -->
   </head>
+
   <body>
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+      <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
     <!-- ***** Preloader End ***** -->
 
     <?php if ($isHeaderActive == 'true') { ?>
-    <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="index.php"><h2>Host <em>Cloud</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="index.php">Home
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.php">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="services.php">Our Services</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact Us</a>
-              </li>
-            </ul>
+      <!-- Header -->
+      <header class="">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            <a class="navbar-brand" href="index.php">
+              <h2>Host <em>Cloud</em></h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.php">Home
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.php">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="services.php">Our Services</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.php">Contact Us</a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-       <div class="functional-buttons">
+          <div class="functional-buttons">
             <ul>
-              <li><a href="#">Log in</a></li>
-              <li><a href="#">Sign Up</a></li>
+              <?php if ($isLoginActive == 'true') { ?>
+                <li><a href="#">Log in</a></li>
+              <?php } ?>
+              <?php if ($isSignUpActive == 'true') { ?>
+                <li><a href="#">Sign Up</a></li>
+              <?php } ?>
             </ul>
           </div>
-        </div>
-      </nav>
-    </header>
+          </div>
+        </nav>
+      </header>
     <?php } ?>
-
