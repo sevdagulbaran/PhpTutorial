@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="left-image">
-              <img src="assets/images/our-team.jpg" alt="">
+              <img src="/assets/images/our-team.jpg" alt="">
             </div>
           </div>
           <div class="col-md-6">

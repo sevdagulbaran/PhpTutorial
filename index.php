@@ -1,19 +1,8 @@
 <?php
   require_once 'header.php';
-  require_once 'connection.php';
-
- // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isSearchDomain' AND `key`='isTldBar'");
-  $query->execute();
-  $isSearchDomain = true;
-  $isTldBar = true;
-
-  if ($query->rowCount() > 0) {
-    $result = $query->fetchAll();
-    foreach ($result as $row) {
-      $isSearchDomain = $row['value'];
-      $isTldBar = $row['value'];
-    }
-  }
+  $isSearchDomain = getConfigValueByKey("isSearchDomain", $db);
+  $isTldBar       = getConfigValueByKey("isTldBar", $db);
+  $isSearchDomainRequired      = getConfigValueByKey("isSearchDomainRequired", $db);
 
   ?>
 
@@ -30,8 +19,12 @@
               <div id="search-section">
               	<form id="suggestion_form" name="gs" method="get" action="#">
                 <div class="searchText">
-
-                  <input type="text" name="q" class="searchText" placeholder="Enter your domain here..." autocomplete="on">
+                  <input type="text"
+                         name="q"
+                         class="searchText"
+                         placeholder="Enter your domain here..."
+                         autocomplete="on"
+                        <?php $isSearchDomainRequired == 'true' ? "required" : "" ?>>
                   <?php if ($isTldBar == 'true') { ?>
                   <ul>
                     <li><label><input type="checkbox" name="ext_com" value="1"><span>.com <em>($10/yr)</em></span></label></li>
