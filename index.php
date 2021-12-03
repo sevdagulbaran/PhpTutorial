@@ -2,7 +2,7 @@
   require_once 'header.php';
   require_once 'connection.php';
 
-  $query = $db->prepare("SELECT value FROM settings WHERE `key`='isSearchDomain' AND `key`='isTldBar'");
+ // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isSearchDomain' AND `key`='isTldBar'");
   $query->execute();
   $isSearchDomain = true;
   $isTldBar = true;

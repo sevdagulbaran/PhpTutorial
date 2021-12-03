@@ -1,22 +1,24 @@
   <?php
   require_once 'connection.php';
   // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isHeaderActive'");
-  $query = $db->prepare("SELECT value FROM settings WHERE `key`='isLoginActive' AND `key`='isSignUpActive' AND `key`='isHeaderActive'");
+  // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isLoginActive' AND `key`='isSignUpActive'");
   // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isSignUpActive'");
-  //$query = $db->prepare("SELECT value FROM settings WHERE `key` IN ('isSignUp', 'isLoginActive')");
+  // $query = $db->prepare("SELECT value FROM settings WHERE `key`='isLoginActive'");
+  // $query = $db->prepare("SELECT value FROM settings WHERE `key` IN ('isSignUp', 'isLoginActive')");
   $query->execute();
   $isHeaderActive = true;
   $isLoginActive = true;
-  $isSignUpActive = false;
+   $isSignUpActive = true;
   if ($query->rowCount() > 0) {
-    $result = $query->fetchAll();
-    foreach ($result as $row) {
-      $isHeaderActive = $row['value'];
-      $isSignUpActive = $row['value'];
-      $isLoginActive = $row['value'];
-    }
+      $result = $query->fetchAll();
+      foreach ($result as $row) {
+          $isHeaderActive = $row['value'];
+          $isSignUpActive = $row['value'];
+          $isLoginActive = $row['value'];
+      }
   }
-
+echo $isSignUpActive;
+echo$isLoginActive ;
   ?>
 
   <!DOCTYPE html>
