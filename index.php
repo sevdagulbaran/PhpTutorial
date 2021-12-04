@@ -2,7 +2,16 @@
   require_once 'header.php';
   $isSearchDomain = getConfigValueByKey("isSearchDomain", $db);
   $isTldBar       = getConfigValueByKey("isTldBar", $db);
-  $isSearchDomainRequired      = getConfigValueByKey("isSearchDomainRequired", $db);
+  $isSearchDomainRequired  = getConfigValueByKey("isSearchDomainRequired", $db);
+  $company1     = getConfigByImage("company 1", $db);
+  $company2     = getConfigByImage("company 2", $db);
+  $company3     = getConfigByImage("company 3", $db);
+  $company4     = getConfigByImage("company 4", $db);
+  $company5     = getConfigByImage("company 5", $db);
+  $company6     = getConfigByImage("company 6", $db);
+  $company7     = getConfigByImage("company 7", $db);
+
+
 
   ?>
 
@@ -59,25 +68,25 @@
           <div class="col-md-12">
             <div class="owl-trusted owl-carousel">
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 1">
+                <img src="assets/images/<?php echo $company1?>" alt="trusted 1">
               </div>
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 2">
+                <img src="assets/images/<?php echo $company2?>" alt="trusted 2">
               </div>
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 3">
+                <img src="assets/images/<?php echo $company3?>" alt="trusted 3">
               </div>
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 4">
+                <img src="assets/images/<?php echo $company4?>" alt="trusted 4">
               </div>
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 5">
+                <img src="assets/images/<?php echo $company5?>" alt="trusted 5">
               </div>
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 6">
+                <img src="assets/images<?php echo $company6?>" alt="trusted 6">
               </div>
               <div class="trusted-item">
-                <img src="assets/images/trusted-01.png" alt="trusted 7">
+                <img src="assets/images/<?php echo $company7?>" alt="trusted 7">
               </div>
             </div>
           </div>
