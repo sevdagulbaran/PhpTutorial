@@ -8,14 +8,7 @@
     $isTitleActive  = getConfigValueByKey("isTitleActive ", $db);
     $isLogoActive   = getConfigValueByKey("isLogoActive", $db);
     $logoName       = getConfigValueByKey("logoName", $db);
-    $homeName       = getConfigNavbarItemsByName(1, $db);
-    $homeLink       = getConfigNavbarItemsByLink(1, $db);
-    $aboutName      = getConfigNavbarItemsByName(2, $db);
-    $aboutLink      = getConfigNavbarItemsByLink(2, $db);
-    $servicesName   = getConfigNavbarItemsByName(3, $db);
-    $servicesLink   = getConfigNavbarItemsByLink(3, $db);
-    $contactName    = getConfigNavbarItemsByName(4, $db);
-    $contactLink    = getConfigNavbarItemsByLink(4, $db);
+    $navbarItems    = getNavbarItems($db);
 
 
     ?>
@@ -80,18 +73,11 @@ https://templatemo.com/tm-541-host-cloud
                       </button>
                       <div class="collapse navbar-collapse" id="navbarResponsive">
                           <ul class="navbar-nav ml-auto">
+                          <?php foreach($navbarItems as $navbarItem){?>
                               <li class="nav-item">
-                                  <a class="nav-link" href="<?php echo $homeLink ?>"><?php echo $homeName ?></a>
+                                  <a class="nav-link" href="<?php echo $navbarItem->link ?>"><?php echo $navbarItem->name ?></a>
                               </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="<?php echo $aboutLink ?>"><?php echo $aboutName ?></a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="<?php echo $servicesLink ?>"><?php echo $servicesName ?>s</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="<?php echo $contactLink ?>"><?php echo $contactName ?></a>
-                              </li>
+                              <?php } ?>
                           </ul>
                       </div>
                   </div>

@@ -7,45 +7,29 @@ function getConfigValueByKey(string $key, PDO $db)
     if ($query->rowCount() > 0) {
         $result = $query->fetchAll();
         foreach ($result as $row) {
-            return $row['value'];
+            return $row->value;
         }
     }
     return null;
 }
-function getConfigByImage(string $src, PDO $db)
+function getCompanies(PDO $db)
 {
-    $query = $db->prepare("SELECT image FROM companies WHERE `name`='$src'");
+    $query = $db->prepare("SELECT * FROM companies");
     $query->execute();
     if ($query->rowCount() > 0) {
         $result = $query->fetchAll();
-        foreach ($result as $row) {
-            return $row['image'];
-        }
+        return $result;
     }
     return null;
 }
-function getConfigNavbarItemsByName(int $i, PDO $db)
+function getNavbarItems(PDO $db)
 {
-    $query = $db->prepare("SELECT name FROM navbar_items WHERE`id`='$i'");
+    $query = $db->prepare("SELECT * FROM navbar_items");
     $query->execute();
     if ($query->rowCount() > 0) {
         $result = $query->fetchAll();
-        foreach ($result as $row) {
-            return $row['name'];
-        }
+        return $result;
     }
     return null;
 }
 
-function getConfigNavbarItemsByLink(int $i, PDO $db)
-{
-    $query = $db->prepare("SELECT link FROM navbar_items WHERE`id`='$i'");
-    $query->execute();
-    if ($query->rowCount() > 0) {
-        $result = $query->fetchAll();
-        foreach ($result as $row) {
-            return $row['link'];
-        }
-    }
-    return null;
-}

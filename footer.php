@@ -71,7 +71,7 @@ $siteTitle			= getConfigValueByKey("siteTitle",$db);
 				</div>
 				<div class="col-md-12">
 					<div class="sub-footer">
-						<p>Copyright &copy; 2020 <?php echo $siteTitle ?>
+						<p>Copyright &copy; <?php echo date('Y')." ".$siteTitle ?>
 							- Designed by <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
 					</div>
 				</div>
