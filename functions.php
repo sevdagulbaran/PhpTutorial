@@ -62,4 +62,28 @@ function getTestimonials(PDO $db)
     }
     return null;
 }
-
+function getProducts(PDO $db)
+{
+    $sql = "SELECT products.* , currency.prefix FROM products
+     LEFT JOIN currency ON currency.id=products.currency_id ";
+    $query = $db->prepare($sql);
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        foreach ($result as $key => $row) {
+            $result[$key]->features = getProductFeaturesById($row->id, $db);
+        }
+        return $result;
+    }
+    return null;
+}
+function getProductFeaturesById(int $productId, PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM products_features WHERE `product_id`='$productId'");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
