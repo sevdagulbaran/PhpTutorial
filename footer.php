@@ -3,11 +3,11 @@ require_once 'connection.php';
 require_once 'functions.php';
 
 $isFooterActive     = getConfigValueByKey("isFooterActive", $db);
-$footerDescription  = getConfigValueByKey("footerDescription", $db);
-$footerPhone        = getConfigValueByKey("footerPhone ", $db);
-$footerEmail		= getConfigValueByKey("footerEmail", $db);
-$footerSupport		= getConfigValueByKey("footerSupport", $db);
-$footerWebsite		= getConfigValueByKey("footerWebsite", $db);
+$aboutus  			= getConfigValueByKey("aboutus", $db);
+$phone        		= getConfigValueByKey("phone ", $db);
+$email				= getConfigValueByKey("email", $db);
+$support			= getConfigValueByKey("support", $db);
+$website			= getConfigValueByKey("website", $db);
 $siteTitle			= getConfigValueByKey("siteTitle",$db);
 
 ?>
@@ -21,7 +21,7 @@ $siteTitle			= getConfigValueByKey("siteTitle",$db);
 						<div class="footer-heading">
 							<h2>About Us</h2>
 						</div>
-						<p><?php echo $footerDescription ?></p>
+						<p><?php echo $aboutus ?></p>
 					</div>
 				</div>
 
@@ -62,10 +62,10 @@ $siteTitle			= getConfigValueByKey("siteTitle",$db);
 							<h2>More Information</h2>
 						</div>
 						<ul class="footer-list">
-							<li>Phone: <a href="#"><?php echo $footerPhone ?></a></li>
-							<li>Email: <a href="#"><?php echo $footerEmail ?></a></li>
-							<li>Support: <a href="#"><?php echo $footerSupport ?></a></li>
-							<li>Website: <a href="#"><?php echo $footerWebsite ?></a></li>
+							<li>Phone: <a href="#"><?php echo $phone ?></a></li>
+							<li>Email: <a href="#"><?php echo $email ?></a></li>
+							<li>Support: <a href="#"><?php echo $support ?></a></li>
+							<li>Website: <a href="#"><?php echo $website ?></a></li>
 						</ul>
 					</div>
 				</div>

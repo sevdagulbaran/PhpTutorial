@@ -32,4 +32,34 @@ function getNavbarItems(PDO $db)
     }
     return null;
 }
+function getCloudFeatures(PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM cloud_features");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
+function getServices(PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM services");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
+function getTestimonials(PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM testimonials");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
 
