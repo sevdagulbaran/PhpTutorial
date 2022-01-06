@@ -87,3 +87,26 @@ function getProductFeaturesById(int $productId, PDO $db)
     }
     return null;
 }
+function getFooterItems(PDO $db)
+{
+    $query = $db->prepare("SELECT * from footer_parent_items ");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        foreach ($result as $key => $row) {
+            $result[$key]->subItems = geFooterItemsByParentId($row->id, $db);
+        }
+        return $result;
+    }
+    return null;
+}
+function geFooterItemsByParentId(int $fotterItemId, PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM footer_items WHERE `parent_id`=' $fotterItemId'");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}

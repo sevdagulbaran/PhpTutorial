@@ -8,7 +8,8 @@ $phone        		= getConfigValueByKey("phone ", $db);
 $email				= getConfigValueByKey("email", $db);
 $support			= getConfigValueByKey("support", $db);
 $website			= getConfigValueByKey("website", $db);
-$siteTitle			= getConfigValueByKey("siteTitle",$db);
+$siteTitle			= getConfigValueByKey("siteTitle", $db);
+$footerItems		= getFooterItems($db);
 
 ?>
 <?php if ($isFooterActive == 'true') { ?>
@@ -24,38 +25,20 @@ $siteTitle			= getConfigValueByKey("siteTitle",$db);
 						<p><?php echo $aboutus ?></p>
 					</div>
 				</div>
-
+				<?php foreach ($footerItems as $footerItem) { ?>
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="footer-item">
 						<div class="footer-heading">
-							<h2>Hosting Plans</h2>
+							<h2><?php echo $footerItem->title ?></h2>
 						</div>
 						<ul class="footer-list">
-							<li><a href="#">Basic Cloud 5X</a></li>
-							<li><a href="#">Cloud VPS 10X</a></li>
-							<li><a href="#">Advanced Cloud</a></li>
-							<li><a href="#">Custom Designs</a></li>
-							<li><a href="#">Special Solutions</a></li>
+							<?php foreach ($footerItem->subItems as $subItem) { ?>
+								<li><a href="<?php echo $subItem->link ?>"><?php echo $subItem->name ?></a></li>
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
-
-
-				<div class="col-md-3 col-sm-6 col-xs-12">
-					<div class="footer-item">
-						<div class="footer-heading">
-							<h2>Useful Links</h2>
-						</div>
-						<ul class="footer-list">
-							<li><a href="#">Cloud Hosting Platform</a></li>
-							<li><a href="#">Light Speed Zone</a></li>
-							<li><a href="#">Content Delivery Network</a></li>
-							<li><a href="#">Customer Support</a></li>
-							<li><a href="#">Latest News</a></li>
-						</ul>
-					</div>
-				</div>
-
+				<?php } ?>
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="footer-item">
 						<div class="footer-heading">
@@ -71,7 +54,7 @@ $siteTitle			= getConfigValueByKey("siteTitle",$db);
 				</div>
 				<div class="col-md-12">
 					<div class="sub-footer">
-						<p>Copyright &copy; <?php echo date('Y')." ".$siteTitle ?>
+						<p>Copyright &copy; <?php echo date('Y') . " " . $siteTitle ?>
 							- Designed by <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
 					</div>
 				</div>
