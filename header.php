@@ -33,6 +33,9 @@
       <link rel="stylesheet" href="/assets/css/fontawesome.css">
       <link rel="stylesheet" href="/assets/css/templatemo-host-cloud.css">
       <link rel="stylesheet" href="/assets/css/owl.css">
+
+
+
       <!--
 
 Host Cloud Template
@@ -84,10 +87,10 @@ https://templatemo.com/tm-541-host-cloud
                   <div class="functional-buttons">
                       <ul>
                           <?php if ($isLoginActive == 'true') { ?>
-                              <li><a href="#">Log in</a></li>
+                              <li><a href="/login.php">Log in</a></li>
                           <?php } ?>
                           <?php if ($isSignUpActive == 'true') { ?>
-                              <li><a href="#">Sign Up</a></li>
+                              <li><a href="/register.php">Sign Up</a></li>
                           <?php } ?>
                       </ul>
                   </div>

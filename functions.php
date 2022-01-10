@@ -110,3 +110,13 @@ function geFooterItemsByParentId(int $fotterItemId, PDO $db)
     }
     return null;
 }
+function  isUserExist(string $email, string $password, PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM users WHERE `email`='$email' AND `password`='$password' ");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
