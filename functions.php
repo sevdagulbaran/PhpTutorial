@@ -12,6 +12,7 @@ function getConfigValueByKey(string $key, PDO $db)
     }
     return null;
 }
+
 function getCompanies(PDO $db)
 {
     $query = $db->prepare("SELECT * FROM companies");
@@ -22,6 +23,7 @@ function getCompanies(PDO $db)
     }
     return null;
 }
+
 function getNavbarItems(PDO $db)
 {
     $query = $db->prepare("SELECT * FROM navbar_items");
@@ -32,6 +34,7 @@ function getNavbarItems(PDO $db)
     }
     return null;
 }
+
 function getCloudFeatures(PDO $db)
 {
     $query = $db->prepare("SELECT * FROM cloud_features");
@@ -42,6 +45,7 @@ function getCloudFeatures(PDO $db)
     }
     return null;
 }
+
 function getServices(PDO $db)
 {
     $query = $db->prepare("SELECT * FROM services");
@@ -52,6 +56,7 @@ function getServices(PDO $db)
     }
     return null;
 }
+
 function getTestimonials(PDO $db)
 {
     $query = $db->prepare("SELECT * FROM testimonials");
@@ -62,6 +67,7 @@ function getTestimonials(PDO $db)
     }
     return null;
 }
+
 function getProducts(PDO $db)
 {
     $sql = "SELECT products.* , currency.prefix FROM products
@@ -77,6 +83,7 @@ function getProducts(PDO $db)
     }
     return null;
 }
+
 function getProductFeaturesById(int $productId, PDO $db)
 {
     $query = $db->prepare("SELECT * FROM products_features WHERE `product_id`='$productId'");
@@ -87,6 +94,7 @@ function getProductFeaturesById(int $productId, PDO $db)
     }
     return null;
 }
+
 function getFooterItems(PDO $db)
 {
     $query = $db->prepare("SELECT * from footer_parent_items ");
@@ -100,6 +108,7 @@ function getFooterItems(PDO $db)
     }
     return null;
 }
+
 function geFooterItemsByParentId(int $fotterItemId, PDO $db)
 {
     $query = $db->prepare("SELECT * FROM footer_items WHERE `parent_id`=' $fotterItemId'");
@@ -110,6 +119,7 @@ function geFooterItemsByParentId(int $fotterItemId, PDO $db)
     }
     return null;
 }
+
 function  isUserExist(string $email, string $password, PDO $db)
 {
     $query = $db->prepare("SELECT * FROM users WHERE `email`='$email' AND `password`='$password' ");
@@ -120,13 +130,39 @@ function  isUserExist(string $email, string $password, PDO $db)
     }
     return null;
 }
+
 function insertToUser(string $name, string $surname,string $email, string $password,  PDO $db){
+
+    $errors = [];
+    $success = "";
+
+    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if ($email === FALSE) {
+        $errors[] = "Geçersiz e-mail adresi";
+    }
+
+    if(strlen($password) < 8 ){
+        $errors[] = "Parola minimum 8 karakter olmalıdır";
+    }
+
+    if(count($errors) > 0 ){
+        $result = [
+            "errors" => $errors,
+            "success" => $success
+        ];
+        return $result;
+    }
 
     $query = $db->prepare("INSERT INTO users ( `name`, `surname`, `email`,`password` ) VALUES ( '$name', '$surname', '$email','$password')");
     $query->execute();
     if ($query->rowCount() > 0) {
         $result = $query->fetchAll();
-        return $result;
+        $success = "Kullanıcı başarıyla kayıt edildi";
     }
-    return null;
+
+    $result = [
+        "errors" => $errors,
+        "success" => $success
+    ];
+    return $result;
 }

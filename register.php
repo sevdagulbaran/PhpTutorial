@@ -22,44 +22,22 @@
 					<div class="card-body">
 						<h4 class="card-title">Register</h4>
 						<?php
-
 						if (isset($_POST['register'])) {
-							if (insertToUser($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['password'], $db)) { ?>
-								<div class="alert alert-success" role="alert">
-									kullanıcı eklendi
-								</div>
-							<?php } else { ?>
-								<div class="alert alert-warning" role="alert">
-									kullanıcı eklenemedi
-								</div>
-						<?php }
-						}
-						?>
-						<?php if (!empty($_POST['email'])) {
 
-							$email = trim(htmlspecialchars($_POST['email']));
-							$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+                            $result = insertToUser($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['password'], $db);
 
-							if ($email === FALSE) { ?>
-								<div class="alert alert-warning" role="alert">
-									Geçersiz email
-								</div>
-						<?php }
-						} ?>
-						<?php
+                            if(count($result["errors"]) == 0){
+                                echo '<div class="alert alert-success" role="alert">'.$result["success"].'</div>';
+                            }else{
+                                echo '<div class="alert alert-danger" role="alert">
+                                        <ul class="list-unstyled mb-0">';
+                                foreach ($result["errors"] as $error) {
+                                    echo "<li>$error</li>";
+                                }
+                               echo '</ul></div>';
+                            }
 
-						if ($_POST['password']) {
-							$password = $_POST['password'];
-							$control = "/\S*((?=\S{8,})(?=\S*[A-Z]))\S*/";
-
-
-							if (!preg_match($control, $password)) { ?>
-								<div class="alert alert-warning" role="alert">
-									gecersiz şife
-								</div>
-						<?php }
-						}
-
+                        }
 						?>
 						<form method="POST" class="my-login-validation" novalidate="">
 							<div class="form-group">
