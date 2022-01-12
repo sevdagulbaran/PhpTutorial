@@ -120,3 +120,13 @@ function  isUserExist(string $email, string $password, PDO $db)
     }
     return null;
 }
+function insertToUser(string $name, string $surname,string $email, string $password,  PDO $db){
+
+    $query = $db->prepare("INSERT INTO users ( `name`, `surname`, `email`,`password` ) VALUES ( '$name', '$surname', '$email','$password')");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}

@@ -1,17 +1,4 @@
-<?php
-
-require_once 'header.php';
-
-if (isset($_POST['login'])) {
-	if (isUserExist($_POST['email'], $_POST['password'], $db)) {
-		echo 'kullanıcı bulundu';
-	} else {
-		echo 'kullanıcı bulunamadı.';
-	}
-}
-
-
-?>
+<?php require_once 'header.php';?>
 
 
 
@@ -35,6 +22,19 @@ if (isset($_POST['login'])) {
 				<div class="card fat">
 					<div class="card-body">
 						<h4 class="card-title">Login</h4>
+				<?php
+
+				if (isset($_POST['login'])) {
+					if (isUserExist($_POST['email'], $_POST['password'], $db)) {?>
+						<div class="alert alert-success" role="alert">
+ 							kullanıcı bulundu.
+						</div>
+					<?php } else {?>
+						<div class="alert alert-warning" role="alert">
+  						kullanıcı bulunamadı.
+						</div>
+					<?php }}?>
+
 						<form method="post" class="my-login-validation" novalidate="">
 							<div class="form-group">
 								<label for="email">E-Mail Address</label>
