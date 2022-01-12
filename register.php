@@ -36,7 +36,6 @@
                                 }
                                echo '</ul></div>';
                             }
-
                         }
 						?>
 						<form method="POST" class="my-login-validation" novalidate="">

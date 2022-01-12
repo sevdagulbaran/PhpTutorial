@@ -122,13 +122,39 @@ function geFooterItemsByParentId(int $fotterItemId, PDO $db)
 
 function  isUserExist(string $email, string $password, PDO $db)
 {
+    $errors = [];
+    $data =[];
+    $success = "";
+
+    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if ($email === FALSE) {
+        $errors[] = "Geçersiz e-mail adresi";
+    }
+
+    if(strlen($password) < 8 ){
+        $errors[] = "Parola minimum 8 karakter olmalıdır";
+    }
+
+    if(count($errors) > 0 ){
+        $result = [
+            "errors" => $errors,
+            "success" => $success
+        ];
+        return $result;
+    }
+
     $query = $db->prepare("SELECT * FROM users WHERE `email`='$email' AND `password`='$password' ");
     $query->execute();
     if ($query->rowCount() > 0) {
-        $result = $query->fetchAll();
-        return $result;
+        $data = $query->fetchAll();
+        $success = "Kullanıcı bulundu";
     }
-    return null;
+    $result = [
+        "errors" => $errors,
+        "success" => $success,
+        "data" => $data
+    ];
+    return $result;
 }
 
 function insertToUser(string $name, string $surname,string $email, string $password,  PDO $db){
@@ -166,3 +192,4 @@ function insertToUser(string $name, string $surname,string $email, string $passw
     ];
     return $result;
 }
+

@@ -25,15 +25,22 @@
 				<?php
 
 				if (isset($_POST['login'])) {
-					if (isUserExist($_POST['email'], $_POST['password'], $db)) {?>
-						<div class="alert alert-success" role="alert">
- 							kullanıcı bulundu.
-						</div>
-					<?php } else {?>
-						<div class="alert alert-warning" role="alert">
-  						kullanıcı bulunamadı.
-						</div>
-					<?php }}?>
+					$result = isUserExist( $_POST['email'], $_POST['password'], $db);
+                            if(count($result["errors"]) == 0){
+								if ($result["data"][0]->status == 'active' ) {
+									echo '<div class="alert alert-success" role="alert">'.$result["success"].'</div>';
+								}else {
+									echo '<div class="alert alert-danger" role="alert">Kullanıcı hesabı yasaklandı</div>';
+								}
+                            }else{
+                                echo '<div class="alert alert-danger" role="alert">
+                                        <ul class="list-unstyled mb-0">';
+                                foreach ($result["errors"] as $error) {
+                                    echo "<li>$error</li>";
+                                }
+                                echo '</ul></div>';
+                            }
+						    }?>
 
 						<form method="post" class="my-login-validation" novalidate="">
 							<div class="form-group">
