@@ -72,7 +72,7 @@
 
 							<div class="form-group m-0">
 								<button type="submit" name="login" class="btn btn-primary btn-block">
-									Login
+								<a href="userpanel.php">Login </a>
 								</button>
 							</div>
 							<div class="mt-4 text-center">

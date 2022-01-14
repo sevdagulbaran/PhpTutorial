@@ -193,3 +193,13 @@ function insertToUser(string $name, string $surname,string $email, string $passw
     return $result;
 }
 
+function getNews(PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM news");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
