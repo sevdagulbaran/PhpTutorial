@@ -38,7 +38,7 @@
                             }
                         }
 						?>
-						<form method="POST" class="my-login-validation" novalidate="">
+						<form method="post" class="my-login-validation" novalidate="">
 							<div class="form-group">
 								<label for="name">Name</label>
 								<input id="name" type="text" class="form-control" name="name" required autofocus>

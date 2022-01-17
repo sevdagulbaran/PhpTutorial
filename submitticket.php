@@ -12,8 +12,25 @@
     </div>
 </div>
 <!-- Heading Ends Here -->
+<?php
+if (isset($_POST['ticket'])) {
 
-<form method="post" role="form">
+    $result = supportTickets($_POST['title'], $_POST['message'], $_POST['urgency'], $db);
+
+    if (count($result["errors"]) == 0) {
+        echo '<div class="alert alert-success" role="alert">' . $result["success"] . '</div>';
+    } else {
+        echo '<div class="alert alert-danger" role="alert">
+                                        <ul class="list-unstyled mb-0">';
+        foreach ($result["errors"] as $error) {
+            echo "<li>$error</li>";
+        }
+        echo '</ul></div>';
+    }
+}
+?>
+
+<form method="post">
     <div class="container my-5 ">
         <div class="row">
             <div class="form-group col-sm-4">
@@ -28,13 +45,13 @@
         <div class="row">
             <div class="form-group col-sm-10">
                 <label for="inputSubject">Subject</label>
-                <input type="text" name="subject" id="inputSubject" value="" class="form-control">
+                <input type="text" name="title" value="" class="form-control">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-sm-3">
                 <label for="inputDepartment">Department</label>
-                <select name="deptid" id="inputDepartment" class="form-control">
+                <select name="department" class="form-control">
                     <option value="1" selected="selected">
                         Support
                     </option>
@@ -42,12 +59,12 @@
             </div>
             <div class="form-group col-sm-5">
                 <label for="inputRelatedService">Related Service</label>
-                <select name="relatedservice" id="inputRelatedService" class="form-control">
+                <select name="relatedservice" class="form-control">
                     <option value="">None</option>
                 </select>
             </div>
             <div class="form-group col-sm-3">
-                <label for="inputPriority">Priority</label>
+                <label for="inputPriority">Urgency</label>
                 <select name="urgency" id="inputPriority" class="form-control">
                     <option value="High">
                         High
@@ -65,21 +82,15 @@
             <label for="inputMessage">Message</label>
             <div class="md-editor" id="1642264520357">
                 <div class="md-header btn-toolbar">
-                </div><textarea name="message" id="inputMessage" rows="12" class="form-control markdown-editor md-input" data-auto-save-name="client_ticket_open" style="resize: vertical;"></textarea>
+                </div><textarea name="message" rows="12" class="form-control markdown-editor md-input" style="resize: vertical;"></textarea>
                 <div class="md-fullscreen-controls"><a href="#" class="exit-fullscreen" title="Exit fullscreen"><span class="glyphicon glyphicon-fullscreen"></span></a></div>
             </div>
         </div>
-
-
         <div class="text-center">
-            <button type="submit" name="submit" class="btn btn-primary "><a class="text-light" href="supporttickets.php">Submit </a></button>
+            <button type="submit" name="ticket" class="btn btn-primary "> Submit </button>
             <a href="userpanel.php" class="btn btn-danger text-light">Cancel</a>
             </p>
         </div>
-
-
-
-
 </form>
 
 

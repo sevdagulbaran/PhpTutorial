@@ -123,7 +123,7 @@ function geFooterItemsByParentId(int $fotterItemId, PDO $db)
 function  isUserExist(string $email, string $password, PDO $db)
 {
     $errors = [];
-    $data =[];
+    $data = [];
     $success = "";
 
     $email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -131,11 +131,11 @@ function  isUserExist(string $email, string $password, PDO $db)
         $errors[] = "Geçersiz e-mail adresi";
     }
 
-    if(strlen($password) < 8 ){
+    if (strlen($password) < 8) {
         $errors[] = "Parola minimum 8 karakter olmalıdır";
     }
 
-    if(count($errors) > 0 ){
+    if (count($errors) > 0) {
         $result = [
             "errors" => $errors,
             "success" => $success
@@ -157,7 +157,8 @@ function  isUserExist(string $email, string $password, PDO $db)
     return $result;
 }
 
-function insertToUser(string $name, string $surname,string $email, string $password,  PDO $db){
+function insertToUser(string $name, string $surname, string $email, string $password,  PDO $db)
+{
 
     $errors = [];
     $success = "";
@@ -167,11 +168,11 @@ function insertToUser(string $name, string $surname,string $email, string $passw
         $errors[] = "Geçersiz e-mail adresi";
     }
 
-    if(strlen($password) < 8 ){
+    if (strlen($password) < 8) {
         $errors[] = "Parola minimum 8 karakter olmalıdır";
     }
 
-    if(count($errors) > 0 ){
+    if (count($errors) > 0) {
         $result = [
             "errors" => $errors,
             "success" => $success
@@ -202,4 +203,34 @@ function getNews(PDO $db)
         return $result;
     }
     return null;
+}
+
+function supportTickets(string $title, string $message, string $urgency, PDO $db){
+
+$errors = [];
+$success = "";
+
+
+if (strlen($title) < 0) {
+    $errors[] = "Title bos bırakılamaz";
+}
+
+if (count($errors) > 0) {
+    $result = [
+        "errors" => $errors,
+        "success" => $success
+    ];
+    return $result;
+}
+    $query = $db->prepare("INSERT INTO support_tickets ( `title`, `message`, `urgency` ) VALUES ( '$title', '$message','$urgency')");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $success = "Form basarıyla gönderildi";
+    }
+
+    $result = [
+        "errors" => $errors,
+        "success" => $success
+    ];
+    return $result;
 }
