@@ -12,15 +12,19 @@
     </div>
 </div>
 <!-- Heading Ends Here -->
+
+
+
+<div class="container my-5 ">
 <?php
 if (isset($_POST['ticket'])) {
 
     $result = supportTickets($_POST['title'], $_POST['message'], $_POST['urgency'], $db);
 
     if (count($result["errors"]) == 0) {
-        echo '<div class="alert alert-success" role="alert">' . $result["success"] . '</div>';
+        echo '<div class="alert alert-succes m-5" style="width:500px;" role="alert">' . $result["success"] . '</div>';
     } else {
-        echo '<div class="alert alert-danger" role="alert">
+        echo '<div class="alert alert-danger col-md-4 "  style="width:500px" role="alert">
                                         <ul class="list-unstyled mb-0">';
         foreach ($result["errors"] as $error) {
             echo "<li>$error</li>";
@@ -29,9 +33,7 @@ if (isset($_POST['ticket'])) {
     }
 }
 ?>
-
-<form method="post">
-    <div class="container my-5 ">
+    <form method="post">
         <div class="row">
             <div class="form-group col-sm-4">
                 <label for="inputName">Name</label>
@@ -91,7 +93,7 @@ if (isset($_POST['ticket'])) {
             <a href="userpanel.php" class="btn btn-danger text-light">Cancel</a>
             </p>
         </div>
-</form>
+    </form>
 
 
 

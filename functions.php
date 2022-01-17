@@ -211,8 +211,11 @@ $errors = [];
 $success = "";
 
 
-if (strlen($title) < 0) {
+if (empty($title)) {
     $errors[] = "Title bos bırakılamaz";
+}
+if(!trim($message)){
+     $errors[] ="Message bos bırakılamaz";
 }
 
 if (count($errors) > 0) {
