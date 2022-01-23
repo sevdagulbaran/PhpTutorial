@@ -72,6 +72,11 @@ $footerItems		= getFooterItems($db);
 <script src="/assets/js/owl.js"></script>
 <script src="/assets/js/accordions.js"></script>
 
+<script>
+    $("#reply-btn").click(function (){
+        $("#reply-form").slideToggle()
+    })
+</script>
 
 <script language="text/Javascript">
 	cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field

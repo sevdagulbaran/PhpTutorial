@@ -5,7 +5,8 @@ if(!isset($_SESSION['loggeduser'])){
     header("Location: login.php");
 }
 
-$news = getNews($db);
+$news       = getNews($db);
+$tickets    = getTickets($db);
 $user = $_SESSION['loggeduser'];
 ?>
 
@@ -77,9 +78,13 @@ $user = $_SESSION['loggeduser'];
                 </h3>
             </div>
             <div class="list-group">
-                <a href="supporttickets.php" class="list-group-item text-dark">dbden gelen bilgiler
-                    <label class="text-light px-1" style="background-color: #33db53;">Open</label><br><small class="text-muted">Last Updated: 15/01/2022 (17:39)</small>
+                <?php foreach($tickets as $t) { ?>
+                <a href="viewticket.php?tid=<?php echo $t->id ?>" class="list-group-item text-dark"> <?php echo $t->title ?>
+                    <label class="text-light px-1" style="background-color: #33db53;"><?php echo $t->status ?></label>
+                    <br>
+                    <small class="text-muted">Last Updated: <?php echo $t->updated_at ?></small>
                 </a>
+                <?php } ?>
             </div>
         </div>
         <div class="row">

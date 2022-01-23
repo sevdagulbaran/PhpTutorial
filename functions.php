@@ -205,27 +205,106 @@ function getNews(PDO $db)
     return null;
 }
 
+function getTickets(PDO $db)
+{
+    $uid = $_SESSION['loggeduser']->id;
+    $query = $db->prepare("SELECT * FROM tickets WHERE `user_id`='$uid'");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
+
+function getTicketDepartments(PDO $db)
+{
+    $query = $db->prepare("SELECT * FROM ticket_departments");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
+
+function getTicket(PDO $db,$id)
+{
+    $query = $db->prepare("SELECT * FROM tickets WHERE `id`='$id'");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result[0];
+    }
+    return null;
+}
+
+function getTicketReplies(PDO $db,$tid)
+{
+    $query = $db->prepare("SELECT * FROM ticket_replies WHERE `tid`='$tid' ORDER BY `id` DESC");
+    $query->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        foreach ($result as $key => $reply) {
+            if($reply->reply_admin_id != 0 ){
+                // send a request to admin table. with admin id.
+                $result[$key]->admin = [
+                    "id" => $reply->reply_admin_id,
+                    "name" => "sevda",
+                    "surname" => "baran"
+                ];
+            }
+        }
+        return $result;
+    }
+    return null;
+}
+
+function insertTicketReplies(PDO $db,$tid,$message)
+{
+    $uid = $_SESSION['loggeduser']->id;
+    $query = $db->prepare("INSERT INTO ticket_replies ( `tid`, `user_id`, `message`) VALUES ( '$tid', '$uid','$message')");
+    $query->execute();
+    $query2 = $db->prepare("UPDATE tickets SET `status` = 'customer-reply' WHERE `id` = '$tid'");
+    $query2->execute();
+    if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        return $result;
+    }
+    return null;
+}
+
 function supportTickets(string $title, string $message, string $urgency, PDO $db){
 
-$errors = [];
-$success = "";
+    $errors = [];
+    $success = "";
 
+    if (empty($title)) {
+        $errors[] = "Title boş bırakılamaz";
+    }
+    if(!trim($message)){
+         $errors[] ="Message boş bırakılamaz";
+    }
 
-if (empty($title)) {
-    $errors[] = "Title bos bırakılamaz";
-}
-if(!trim($message)){
-     $errors[] ="Message bos bırakılamaz";
-}
+    if (count($errors) > 0) {
+        $result = [
+            "errors" => $errors,
+            "success" => $success
+        ];
+        return $result;
+    }
 
-if (count($errors) > 0) {
-    $result = [
-        "errors" => $errors,
-        "success" => $success
-    ];
-    return $result;
-}
-    $query = $db->prepare("INSERT INTO support_tickets ( `title`, `message`, `urgency` ) VALUES ( '$title', '$message','$urgency')");
+    $did        = $_POST['department'];
+    $uid        = $_SESSION['loggeduser']->id;
+    $subject    = $_POST['title'];
+    $message    = $_POST['message'];
+    $urgency    = $_POST['urgency'];
+    $status    = "active";
+    $isadminread        = 0;
+    $isclientread       = 1;
+
+    $query = $db->prepare("INSERT INTO tickets ( `department_id`, `user_id`, `title`, `message`, `urgency`, `status`, `isadminread`, `isclientread`) 
+                                 VALUES ( '$did', '$uid','$subject','$message','$urgency','$status','$isadminread','$isclientread')");
     $query->execute();
     if ($query->rowCount() > 0) {
         $success = "Form basarıyla gönderildi";
