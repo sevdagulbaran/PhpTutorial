@@ -86,12 +86,23 @@ https://templatemo.com/tm-541-host-cloud
                   </div>
                   <div class="functional-buttons">
                       <ul>
-                          <?php if ($isLoginActive == 'true') { ?>
+                          <?php
+                           if(isset($_SESSION['loggeduser'])){ ?>
+                               <li><a href="/userpanel.php">ClientArea</a></li>
+                          <?php } ?>
+                          <?php if ($isLoginActive == 'true') {
+                            if(!isset($_SESSION['loggeduser'])){
+                              ?>
+
                               <li><a href="/login.php">Log in</a></li>
-                          <?php } ?>
-                          <?php if ($isSignUpActive == 'true') { ?>
+
+                          <?php }} ?>
+                          <?php
+                          if ($isSignUpActive == 'true') {
+                          if(!isset($_SESSION['loggeduser'])){
+                              ?>
                               <li><a href="/register.php">Sign Up</a></li>
-                          <?php } ?>
+                          <?php }} ?>
                       </ul>
                   </div>
                   </div>

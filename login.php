@@ -1,7 +1,10 @@
-<?php require_once 'header.php';?>
+<?php require_once 'header.php';
 
+if(isset($_SESSION['loggeduser'])){
+    header("Location: userpanel.php");
+}
 
-
+?>
 
 <!-- Heading Starts Here -->
 <div class="page-heading header-text">
@@ -29,6 +32,8 @@
                             if(count($result["errors"]) == 0){
 								if ($result["data"][0]->status == 'active' ) {
 									echo '<div class="alert alert-success" role="alert">'.$result["success"].'</div>';
+                                    $_SESSION['loggeduser'] = $result["data"][0];
+                                    header("Location: userpanel.php");
 								}else {
 									echo '<div class="alert alert-danger" role="alert">Kullanıcı hesabı yasaklandı</div>';
 								}

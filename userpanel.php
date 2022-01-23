@@ -1,5 +1,12 @@
 <?php require_once 'header.php';
+
+
+if(!isset($_SESSION['loggeduser'])){
+    header("Location: login.php");
+}
+
 $news = getNews($db);
+$user = $_SESSION['loggeduser'];
 ?>
 
 <!-- Heading Starts Here -->
@@ -7,8 +14,8 @@ $news = getNews($db);
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Login</h1>
-                <p><a href="index.php">Home</a> / <span>User Panel</span></p>
+                <h1>Clientarea</h1>
+                <p><a href="index.php">Home</a> / <span>Clientarea</span></p>
             </div>
         </div>
     </div>
@@ -18,10 +25,10 @@ $news = getNews($db);
 
 <div class="container d-flex flex-row bd-highlight">
     <div class="flex-column flex-shrink-0 p-3 text-white my-5 mr-3 rounded" style="width: 380px; height: 500px; background:#ebf0ec;">
-
-        <span class="fs-4 text-dark">Hoşgeldin, db den ismini çek </span>
-
-        </a>
+        <span class="fs-4 text-dark">Welcome,
+            <span class="text-capitalize"><?php echo ucfirst($user->name) ?></span>
+            <span class="text-uppercase"><?php echo strtoupper($user->surname) ?></span>
+        </span>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item ">
@@ -50,7 +57,7 @@ $news = getNews($db);
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-dark">
+                <a href="logout.php" class="nav-link text-dark">
                     Log-out
                 </a>
             </li>
